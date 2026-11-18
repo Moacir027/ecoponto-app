@@ -1,4 +1,4 @@
-const VERSION = 'ecoponto-v1';
+const VERSION = 'ecoponto-v2';
 const SHELL = [
   './',
   './index.html',

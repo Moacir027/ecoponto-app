@@ -28,3 +28,14 @@ document.getElementById('locate').onclick=()=>{if(!navigator.geolocation)return 
   ()=>alert('Não foi possível obter sua localização'))};
 document.getElementById("count").textContent=ECOPONTOS.length;
 render();
+// Botão "Instalar app"
+let installEvt=null;
+const installCard=document.getElementById('install-card'),installBtn=document.getElementById('install-btn');
+const jaInstalado=matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
+const ehIOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
+if(!jaInstalado)installCard.hidden=false;
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();installEvt=e});
+window.addEventListener('appinstalled',()=>{installCard.hidden=true});
+installBtn.onclick=async()=>{
+ if(installEvt){installEvt.prompt();const r=await installEvt.userChoice;installEvt=null;if(r.outcome==='accepted')installCard.hidden=true;return}
+ alert(ehIOS?'No iPhone: toque em Compartilhar e depois em "Adicionar à Tela de Início".':'Abra o menu ⋮ do Chrome e toque em "Instalar app" (ou "Adicionar à tela inicial").')};
